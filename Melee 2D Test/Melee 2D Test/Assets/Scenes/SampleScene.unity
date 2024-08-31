@@ -6002,6 +6002,62 @@ PrefabInstance:
       propertyPath: parryOpeningTime
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 6402775307298523465, guid: d1f74d917c316a44f960c81e0c300a42, type: 3}
+      propertyPath: parryFollowUpOpening
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075168299307679949, guid: d1f74d917c316a44f960c81e0c300a42, type: 3}
+      propertyPath: validAnimatorNames.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075168299307679949, guid: d1f74d917c316a44f960c81e0c300a42, type: 3}
+      propertyPath: validAnimatorNames.Array.data[0]
+      value: PlayerHit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075168299307679949, guid: d1f74d917c316a44f960c81e0c300a42, type: 3}
+      propertyPath: validAnimatorNames.Array.data[1]
+      value: Attack1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075168299307679949, guid: d1f74d917c316a44f960c81e0c300a42, type: 3}
+      propertyPath: validAnimatorNames.Array.data[2]
+      value: Attack2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075168299307679949, guid: d1f74d917c316a44f960c81e0c300a42, type: 3}
+      propertyPath: validInputStopAnimations.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075168299307679949, guid: d1f74d917c316a44f960c81e0c300a42, type: 3}
+      propertyPath: validInputStopAnimations.Array.data[0]
+      value: PlayerHit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075168299307679949, guid: d1f74d917c316a44f960c81e0c300a42, type: 3}
+      propertyPath: validMovementStopAnimations.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075168299307679949, guid: d1f74d917c316a44f960c81e0c300a42, type: 3}
+      propertyPath: validMovementStopAnimations.Array.data[0]
+      value: PlayerHit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075168299307679949, guid: d1f74d917c316a44f960c81e0c300a42, type: 3}
+      propertyPath: validMovementStopAnimations.Array.data[1]
+      value: Attack1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075168299307679949, guid: d1f74d917c316a44f960c81e0c300a42, type: 3}
+      propertyPath: validMovementStopAnimations.Array.data[2]
+      value: Attack2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075168299307679949, guid: d1f74d917c316a44f960c81e0c300a42, type: 3}
+      propertyPath: validMovementStopAnimations.Array.data[3]
+      value: Attack3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075168299307679949, guid: d1f74d917c316a44f960c81e0c300a42, type: 3}
+      propertyPath: validMovementStopAnimations.Array.data[4]
+      value: PlayerSpecialAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 7075168299307679949, guid: d1f74d917c316a44f960c81e0c300a42, type: 3}
+      propertyPath: validMovementStopAnimations.Array.data[5]
+      value: PlayerBlock
+      objectReference: {fileID: 0}
     - target: {fileID: 7118645626551020317, guid: d1f74d917c316a44f960c81e0c300a42, type: 3}
       propertyPath: m_Name
       value: Player

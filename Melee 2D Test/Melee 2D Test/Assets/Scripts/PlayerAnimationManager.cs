@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerAnimationManager : MonoBehaviour
 {
@@ -9,6 +10,11 @@ public class PlayerAnimationManager : MonoBehaviour
 
     public float dashClipLength;
     public float rollClipLength;
+    public float takeHitClipLength;
+    public float specialAttackClipLength;
+    public float takeHitSpeed = 1.5f;
+
+    public bool isHit = false;
     private void Awake()
     {
         player = GetComponent<PlayerManager>();
@@ -23,7 +29,9 @@ public class PlayerAnimationManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleMovementAnimations(); 
+        HandleMovementAnimations();
+        isHit = player.playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("PlayerHit");
+
     }
 
     private void HandleMovementAnimations()
@@ -38,8 +46,28 @@ public class PlayerAnimationManager : MonoBehaviour
         }
     }
 
+    public void HandleTakeHitAnimation()
+    {
+       
+
+        // stop player when hit
+        //player.playerCombatManager.stunPlayer(takeHitClipLength/ takeHitSpeed);
+
+        if (player.playerLocomotionManager.isRolling)
+        {
+            player.playerAnimator.SetBool("isRolling", false);
+        }
+        if (player.playerLocomotionManager.isDashing)
+        {
+            player.playerAnimator.SetBool("isDashing", false) ;
+        }
+        
+        
+    }
+    
     public void UpdateAnimClipTimes()
     {
+        // collect all animation clip lengths
         AnimationClip[] clips = player.playerAnimator.runtimeAnimatorController.animationClips;
         foreach (AnimationClip clip in clips)
         {
@@ -51,6 +79,18 @@ public class PlayerAnimationManager : MonoBehaviour
             if (clip.name == "PlayerRoll")
             {
                 rollClipLength = clip.length;
+
+            }
+
+            if (clip.name == "PlayerHit")
+            {
+                takeHitClipLength = clip.length;
+                Debug.Log("hit length" + takeHitClipLength);
+            }
+
+            if (clip.name == "SpecialAttack1")
+            {
+                specialAttackClipLength = clip.length;
             }
         }
     }

@@ -15,6 +15,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool isAttacking = false;
     public bool isRolling = false;
     public bool isBlocking = false;
+    public bool isSpecialAttacking = false;
 
     [Header("Button Checks")]
     public bool jumpPressed = false;
@@ -25,6 +26,9 @@ public class PlayerInputManager : MonoBehaviour
     public float jumpDelayTime = 0.2f;
     public float dashDelayTime = 0.2f;
     public float rollDelayTime = 0.1f;
+
+    public Coroutine takeHitCoroutine;
+    public bool movementPaused;
     
 
     private void Awake()
@@ -51,6 +55,8 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerAttack.Attack.started += OnAttackStarted;
             playerControls.PlayerAttack.Block.performed += i => isBlocking = true;
             playerControls.PlayerAttack.Block.canceled += i => isBlocking = false;
+            playerControls.PlayerAttack.SpecialAttack.performed += i => isSpecialAttacking = true;
+            playerControls.PlayerAttack.SpecialAttack.canceled += i => isSpecialAttacking = false;
             //playerControls.PlayerAttack.Attack.canceled += OnAttackCanceled;
         }
 
@@ -67,7 +73,49 @@ public class PlayerInputManager : MonoBehaviour
         //playerControls.PlayerAttack.Attack.canceled -= OnAttackCanceled;
     }
 
-    
+
+    public void PauseInputs(float time)
+    {
+        // Vector 2 movement is checked in GetMovementDirection
+        playerControls.PlayerMovement.Jump.started -= OnJumpStarted;
+        playerControls.PlayerMovement.Dash.started -= OnDashStarted;
+        playerControls.PlayerMovement.Roll.started -= OnRollStarted;
+        playerControls.PlayerAttack.Attack.started -= OnAttackStarted;
+
+        movementInput = Vector2.zero;
+        if (takeHitCoroutine != null)
+        {
+            StopCoroutine(takeHitCoroutine);
+        }
+
+        if (time > 0)
+        {
+            movementPaused = true;
+            takeHitCoroutine = StartCoroutine(ResumeInputs(time));
+        }
+        else
+        {
+            StartCoroutine(ResumeInputs(0));
+        }
+    }
+
+    public IEnumerator ResumeInputs(float time)
+    {
+        yield return new WaitForSeconds(time);
+        playerControls.PlayerMovement.Jump.started += OnJumpStarted;
+        playerControls.PlayerMovement.Dash.started += OnDashStarted;
+        playerControls.PlayerMovement.Roll.started += OnRollStarted;
+        playerControls.PlayerAttack.Attack.started += OnAttackStarted;
+
+        if (playerControls.PlayerMovement.Movement.ReadValue<Vector2>() != Vector2.zero)
+        {
+            movementInput = playerControls.PlayerMovement.Movement.ReadValue<Vector2>();
+        }
+
+        movementPaused = false;
+    }
+
+
     // jumping
     private void OnJumpStarted(InputAction.CallbackContext context)
     {
@@ -126,7 +174,13 @@ public class PlayerInputManager : MonoBehaviour
 
     public Vector2 GetMovementDirection()
     {
-        return movementInput.normalized;
+        Vector2 playerDirection = movementInput.normalized;
+
+        if (movementPaused)
+        {
+            playerDirection = Vector2.zero;
+        }
+        return playerDirection;
     }
     
     public IEnumerator ResetDashTime(float time)

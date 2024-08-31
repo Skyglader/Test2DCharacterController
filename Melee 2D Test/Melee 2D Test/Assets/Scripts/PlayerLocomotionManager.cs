@@ -71,7 +71,7 @@ public class PlayerLocomotionManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isDashing)
+        if (isDashing || isRolling)
         {
             return;
         }
@@ -125,14 +125,7 @@ public class PlayerLocomotionManager : MonoBehaviour
     {
         if (stopMoving)
         {
-            if (player.isGrounded)
-            {
-               // player.rb.velocity = new Vector2(0f, 0f);
-            }
-            else
-            {
-                player.rb.velocity = new Vector2(player.rb.velocity.x, 0f);
-            }
+            player.rb.velocity = new Vector2(player.rb.velocity.x, 0f);
             return;
         }
         Vector2 dir = PlayerInputManager.instance.GetMovementDirection();
@@ -204,6 +197,7 @@ public class PlayerLocomotionManager : MonoBehaviour
     {
         if (PlayerInputManager.instance.isRolling && canRoll && !stopRolling && !player.playerCombatManager.currentlyAttacking && player.isGrounded)
         {
+            // activate i-frame at beginning of roll
             StartCoroutine(Roll());
         }
     }
@@ -219,15 +213,17 @@ public class PlayerLocomotionManager : MonoBehaviour
         float originalGravity = player.rb.gravityScale;
         player.rb.gravityScale = 0f;
 
-
+       
         if (player.playerModel.transform.localRotation.y == 0f)
         {
             player.rb.velocity = Vector2.right * dashingPower;
         }
         else
         {
-            player.rb.velocity = -Vector2.right * dashingPower;
+            player.rb.velocity = Vector2.left * dashingPower;
         }
+        
+        
 
         StopAllMovement(dashingTime);
         yield return new WaitForSeconds(dashingTime);
@@ -247,23 +243,67 @@ public class PlayerLocomotionManager : MonoBehaviour
         player.playerAnimator.SetFloat("rollingSpeed", jumpAnimatorSpeed);
         player.playerAnimator.SetBool("isRolling", true);
 
-       
+        
         if (player.playerModel.transform.localRotation.y == 0f)
         {
             player.rb.velocity = Vector2.right * rollingPower;
         }
         else
         {
-            player.rb.velocity = -Vector2.right * rollingPower;
+            player.rb.velocity = Vector2.left * rollingPower;
         }
 
         StopAllMovement(rollingTime);
         yield return new WaitForSeconds(rollingTime);
+
         player.playerAnimator.speed = 1f;
         player.playerAnimator.SetBool("isRolling", false);
         isRolling = false;
+
+        // Apply rolling cooldown
         yield return new WaitForSeconds(rollingCooldown);
         canRoll = true;
+     
+    }
+
+    public void StopAllMovement(float time)
+    {
+        if (time > 0)
+        {
+            StopGroundedMovement(time);
+            StopJumpingMovement(time);
+            StopDashingMovement(time);
+            StopRollingMovement(time);
+        }
+        else
+        {
+            StopAllMovementRestrictions();
+
+        }
+    }
+
+    public void StopAllMovementRestrictions()
+    {
+        if (stopMovementCoroutine != null)
+        {
+            StopCoroutine(stopMovementCoroutine);
+            stopMoving = false;
+        }
+        if (stopJumpingCoroutine != null)
+        {
+            StopCoroutine(stopJumpingCoroutine);
+            stopJumping = false;
+        }
+        if (stopDashingCoroutine != null)
+        {
+            StopCoroutine(stopDashingCoroutine);
+            stopDashing = false;
+        }
+        if (stopRollingCoroutine != null)
+        {
+            StopCoroutine(stopRollingCoroutine);
+            stopRolling = false;
+        }
     }
 
     public void StopGroundedMovement(float time)
@@ -332,43 +372,5 @@ public class PlayerLocomotionManager : MonoBehaviour
         stopRolling = false;
         stopRollingCoroutine = null;
     }
-    public void StopAllMovement(float time)
-    {
-        if (time > 0)
-        {
-            StopGroundedMovement(time);
-            StopJumpingMovement(time);
-            StopDashingMovement(time);
-            StopRollingMovement(time);
-        }
-        else 
-        {
-            StopAllMovementRestrictions();
-
-        }
-    }
-
-    public void StopAllMovementRestrictions()
-    {
-        if (stopMovementCoroutine != null)
-        {
-            StopCoroutine(stopMovementCoroutine);
-            stopMoving = false;
-        }
-        if (stopJumpingCoroutine != null)
-        {
-            StopCoroutine(stopJumpingCoroutine);
-            stopJumping = false;
-        }
-        if (stopDashingCoroutine != null)
-        {
-            StopCoroutine(stopDashingCoroutine);
-            stopDashing = false;
-        }
-        if (stopRollingCoroutine != null)
-        {
-            StopCoroutine(stopRollingCoroutine);
-            stopRolling = false;
-        }
-    }
+   
 }

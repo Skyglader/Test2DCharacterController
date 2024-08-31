@@ -10,4 +10,9 @@ public class ChildToParent : MonoBehaviour
     {
         player.rb.velocity = Vector2.zero;
     }
+
+    public void ShakeCamera(float intensity)
+    {
+        CameraShake.instance.ShakeCamera(intensity, 0.1f);
+    }
 }

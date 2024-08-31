@@ -1,54 +1,46 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\",
+  "WorkspaceRootPath": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|e:\\github projects\\melee 2d test\\melee 2d test\\assets\\scripts\\playermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|e:\\github projects\\melee 2d test\\melee 2d test\\assets\\camerashake.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\camerashake.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\assets\\aimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\aimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\assets\\combostatemanager\\scripts\\combocharacter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\combostatemanager\\scripts\\combocharacter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\assets\\worldgameobjectstorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\worldgameobjectstorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\assets\\scripts\\playerparticlestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playerparticlestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\assets\\scripts\\playerinputmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playerinputmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\assets\\scripts\\playerlocomotionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\assets\\scripts\\playerlocomotionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playerlocomotionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\assets\\combostatemanager\\scripts\\groundfinisherstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\combostatemanager\\scripts\\groundfinisherstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\assets\\scripts\\playerinputmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playerinputmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\assets\\combostatemanager\\scripts\\groundentrystate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\combostatemanager\\scripts\\groundentrystate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\assets\\combostatemanager\\scripts\\groundcombostate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\combostatemanager\\scripts\\groundcombostate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\assets\\scripts\\playercombatmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\assets\\scripts\\playercombatmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playercombatmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\assets\\scripts\\playeranimationmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playeranimationmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\assets\\worldgameobjectstorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\worldgameobjectstorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\assets\\scripts\\childtoparent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\childtoparent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\assets\\camerashake.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\camerashake.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|e:\\github projects\\test2dcharactercontroller\\melee 2d test\\melee 2d test\\assets\\scripts\\playermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\assets\\scripts\\playerparticlestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playerparticlestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\assets\\aimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AD358B8-C376-2CD3-2818-8CC0D5220B75}|Assembly-CSharp.csproj|solutionrelative:assets\\aimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -58,150 +50,133 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
+              "Title": "PlayerAnimationManager.cs",
+              "DocumentMoniker": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerAnimationManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerAnimationManager.cs",
+              "ToolTip": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerAnimationManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PlayerAnimationManager.cs",
+              "ViewState": "AQIAABMAAAAAAAAAAAAQwDIAAAAHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-27T05:23:42.15Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ChildToParent.cs",
+              "DocumentMoniker": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\ChildToParent.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ChildToParent.cs",
+              "ToolTip": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\ChildToParent.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ChildToParent.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAA3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-27T03:17:36.953Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "CameraShake.cs",
-              "DocumentMoniker": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\CameraShake.cs",
+              "DocumentMoniker": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\CameraShake.cs",
               "RelativeDocumentMoniker": "Assets\\CameraShake.cs",
-              "ToolTip": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\CameraShake.cs",
+              "ToolTip": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\CameraShake.cs",
               "RelativeToolTip": "Assets\\CameraShake.cs",
-              "ViewState": "AQIAAAgAAAAAAAAAAAAAwCgAAAA2AAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAYwCgAAAA2AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-25T08:44:20.264Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 2,
               "Title": "PlayerCombatManager.cs",
-              "DocumentMoniker": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerCombatManager.cs",
+              "DocumentMoniker": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerCombatManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerCombatManager.cs",
-              "ToolTip": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerCombatManager.cs",
+              "ToolTip": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerCombatManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\PlayerCombatManager.cs",
-              "ViewState": "AQIAANUAAAAAAAAAAAAjwO8AAAAAAAAA",
+              "ViewState": "AQIAAA4BAAAAAAAAAAAIwCUBAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-24T23:46:07.446Z"
+              "WhenOpened": "2024-08-24T23:46:07.446Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "WorldGameObjectStorage.cs",
-              "DocumentMoniker": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\WorldGameObjectStorage.cs",
+              "DocumentMoniker": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\WorldGameObjectStorage.cs",
               "RelativeDocumentMoniker": "Assets\\WorldGameObjectStorage.cs",
-              "ToolTip": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\WorldGameObjectStorage.cs",
+              "ToolTip": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\WorldGameObjectStorage.cs",
               "RelativeToolTip": "Assets\\WorldGameObjectStorage.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-24T01:52:12.567Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ComboCharacter.cs",
-              "DocumentMoniker": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\ComboStateManager\\Scripts\\ComboCharacter.cs",
-              "RelativeDocumentMoniker": "Assets\\ComboStateManager\\Scripts\\ComboCharacter.cs",
-              "ToolTip": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\ComboStateManager\\Scripts\\ComboCharacter.cs",
-              "RelativeToolTip": "Assets\\ComboStateManager\\Scripts\\ComboCharacter.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAABrAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-23T06:26:25.673Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "PlayerParticleStorage.cs",
-              "DocumentMoniker": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerParticleStorage.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerParticleStorage.cs",
-              "ToolTip": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerParticleStorage.cs",
-              "RelativeToolTip": "Assets\\Scripts\\PlayerParticleStorage.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB8AAAAZAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-25T08:18:30.971Z"
+              "WhenOpened": "2024-08-24T01:52:12.567Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "GroundFinisherState.cs",
-              "DocumentMoniker": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\ComboStateManager\\Scripts\\GroundFinisherState.cs",
-              "RelativeDocumentMoniker": "Assets\\ComboStateManager\\Scripts\\GroundFinisherState.cs",
-              "ToolTip": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\ComboStateManager\\Scripts\\GroundFinisherState.cs",
-              "RelativeToolTip": "Assets\\ComboStateManager\\Scripts\\GroundFinisherState.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Title": "PlayerParticleStorage.cs",
+              "DocumentMoniker": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerParticleStorage.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerParticleStorage.cs",
+              "ToolTip": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerParticleStorage.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PlayerParticleStorage.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB8AAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-25T06:54:47.067Z"
+              "WhenOpened": "2024-08-25T08:18:30.971Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "GroundEntryState.cs",
-              "DocumentMoniker": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\ComboStateManager\\Scripts\\GroundEntryState.cs",
-              "RelativeDocumentMoniker": "Assets\\ComboStateManager\\Scripts\\GroundEntryState.cs",
-              "ToolTip": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\ComboStateManager\\Scripts\\GroundEntryState.cs",
-              "RelativeToolTip": "Assets\\ComboStateManager\\Scripts\\GroundEntryState.cs",
-              "ViewState": "AQIAAAcAAAAAAAAAAAAWwBkAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-25T06:54:37.749Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "GroundComboState.cs",
-              "DocumentMoniker": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\ComboStateManager\\Scripts\\GroundComboState.cs",
-              "RelativeDocumentMoniker": "Assets\\ComboStateManager\\Scripts\\GroundComboState.cs",
-              "ToolTip": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\ComboStateManager\\Scripts\\GroundComboState.cs",
-              "RelativeToolTip": "Assets\\ComboStateManager\\Scripts\\GroundComboState.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAuwBEAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-25T06:54:15.296Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "AIManager.cs",
-              "DocumentMoniker": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\AIManager.cs",
+              "DocumentMoniker": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\AIManager.cs",
               "RelativeDocumentMoniker": "Assets\\AIManager.cs",
-              "ToolTip": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\AIManager.cs",
+              "ToolTip": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\AIManager.cs",
               "RelativeToolTip": "Assets\\AIManager.cs",
-              "ViewState": "AQIAADgAAAAAAAAAAAD4v1oAAABdAAAA",
+              "ViewState": "AQIAADgAAAAAAAAAAAD4v1kAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-25T06:36:17.624Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "PlayerLocomotionManager.cs",
-              "DocumentMoniker": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerLocomotionManager.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerLocomotionManager.cs",
-              "ToolTip": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerLocomotionManager.cs",
-              "RelativeToolTip": "Assets\\Scripts\\PlayerLocomotionManager.cs",
-              "ViewState": "AQIAAO4AAAAAAAAAAAAWwAABAAA/AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-25T02:37:03.733Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "PlayerInputManager.cs",
-              "DocumentMoniker": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerInputManager.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerInputManager.cs",
-              "ToolTip": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerInputManager.cs",
-              "RelativeToolTip": "Assets\\Scripts\\PlayerInputManager.cs",
-              "ViewState": "AQIAABEAAAAAAAAAAAAAwFIAAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-22T03:21:11.978Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "PlayerLocomotionManager.cs",
+              "DocumentMoniker": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerLocomotionManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerLocomotionManager.cs",
+              "ToolTip": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerLocomotionManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PlayerLocomotionManager.cs",
+              "ViewState": "AQIAAGoAAAAAAAAAAAAiwH4AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-25T02:37:03.733Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PlayerInputManager.cs",
+              "DocumentMoniker": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerInputManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerInputManager.cs",
+              "ToolTip": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerInputManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PlayerInputManager.cs",
+              "ViewState": "AQIAAEEAAAAAAAAAAAA1wF4AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-22T03:21:11.978Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "PlayerManager.cs",
-              "DocumentMoniker": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerManager.cs",
+              "DocumentMoniker": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerManager.cs",
-              "ToolTip": "E:\\GitHub Projects\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerManager.cs",
+              "ToolTip": "E:\\GitHub Projects\\Test2DCharacterController\\Melee 2D Test\\Melee 2D Test\\Assets\\Scripts\\PlayerManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\PlayerManager.cs",
-              "ViewState": "AQIAADUAAAAAAAAAAAAqwFUAAABHAAAA",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAiwMMAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-22T03:15:58.025Z",
               "EditorCaption": ""
