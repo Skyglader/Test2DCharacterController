@@ -10,6 +10,8 @@ public class PlayerLocomotionManager : MonoBehaviour
 
     [Header("Movement")]
     public float moveSpeed = 10f;
+    public float poweredMoveSpeed = 13f;
+    public float attackSlideSpeed = 2f;
 
     [Header("Jumping")]
     public float jumpStartTime;
@@ -124,15 +126,24 @@ public class PlayerLocomotionManager : MonoBehaviour
     private void HandlePlayerMovement()
     {
         if (stopMoving)
-        {
-            player.rb.velocity = new Vector2(player.rb.velocity.x, 0f);
+        { 
+            player.rb.velocity = new Vector2(Mathf.Lerp(player.rb.velocity.x, 0f, attackSlideSpeed * Time.deltaTime), 0f);
             return;
         }
         Vector2 dir = PlayerInputManager.instance.GetMovementDirection();
 
         if (dir != Vector2.zero)
         {
-            Vector2 targetVelocity = dir * moveSpeed;
+            Vector2 targetVelocity;
+
+            if (player.playerCombatManager.inPoweredState || !player.isGrounded)
+            {
+                targetVelocity = dir * poweredMoveSpeed;
+            }
+            else
+            {
+                targetVelocity = dir * moveSpeed;
+            }
             player.rb.velocity = targetVelocity;
             isMoving = true;
 
@@ -195,7 +206,7 @@ public class PlayerLocomotionManager : MonoBehaviour
 
     private void HandleRollingMovement()
     {
-        if (PlayerInputManager.instance.isRolling && canRoll && !stopRolling && !player.playerCombatManager.currentlyAttacking && player.isGrounded)
+        if (PlayerInputManager.instance.isRolling && canRoll && !stopRolling && !player.playerCombatManager.currentlyAttacking && player.isGrounded && !player.playerCombatManager.inPoweredState)
         {
             // activate i-frame at beginning of roll
             StartCoroutine(Roll());
@@ -207,7 +218,23 @@ public class PlayerLocomotionManager : MonoBehaviour
     {
         canDash = false;
         isDashing = true;
-        float dashAnimatorSpeed = player.playerAnimationManager.dashClipLength / dashingTime;
+        float dashAnimatorSpeed;
+        float speed = dashingPower;
+        float dashDuration = dashingTime;
+        float cooldown = dashingCooldown;
+
+        if (player.playerCombatManager.inPoweredState)
+        {
+            dashAnimatorSpeed = player.playerAnimationManager.poweredDashClipLength / dashingTime;
+            speed += speed * 0.5f;
+            dashDuration = 0.3f;
+            cooldown = 0.3f;
+        }
+        else
+        {
+            dashAnimatorSpeed = player.playerAnimationManager.dashClipLength / dashingTime;
+        }
+
         player.playerAnimator.SetFloat("dashSpeed", dashAnimatorSpeed);
         player.playerAnimator.SetBool("isDashing", true);
         float originalGravity = player.rb.gravityScale;
@@ -216,23 +243,23 @@ public class PlayerLocomotionManager : MonoBehaviour
        
         if (player.playerModel.transform.localRotation.y == 0f)
         {
-            player.rb.velocity = Vector2.right * dashingPower;
+            player.rb.velocity = Vector2.right * speed;
         }
         else
         {
-            player.rb.velocity = Vector2.left * dashingPower;
+            player.rb.velocity = Vector2.left * speed;
         }
         
         
 
-        StopAllMovement(dashingTime);
-        yield return new WaitForSeconds(dashingTime);
+        StopAllMovement(dashDuration);
+        yield return new WaitForSeconds(dashDuration);
         player.playerAnimator.speed = 1f;
         player.rb.gravityScale = originalGravity;
         player.playerAnimator.SetBool("isDashing", false);
         isDashing = false;
         //player.rb.velocity = new Vector2(5f, 0f);
-        yield return new WaitForSeconds(dashingCooldown);
+        yield return new WaitForSeconds(cooldown);
         canDash = true;
     }
     private IEnumerator Roll()

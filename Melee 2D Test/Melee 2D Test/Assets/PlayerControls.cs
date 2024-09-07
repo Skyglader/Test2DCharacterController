@@ -163,6 +163,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Transform"",
+                    ""type"": ""Button"",
+                    ""id"": ""e1997bd8-2ac9-4fda-ad9d-93f2dcbc6651"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -198,6 +207,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""SpecialAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""17e57347-84e9-444e-9401-8efebba0cf3e"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Transform"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -215,6 +235,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerAttack_Attack = m_PlayerAttack.FindAction("Attack", throwIfNotFound: true);
         m_PlayerAttack_Block = m_PlayerAttack.FindAction("Block", throwIfNotFound: true);
         m_PlayerAttack_SpecialAttack = m_PlayerAttack.FindAction("SpecialAttack", throwIfNotFound: true);
+        m_PlayerAttack_Transform = m_PlayerAttack.FindAction("Transform", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -349,6 +370,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerAttack_Attack;
     private readonly InputAction m_PlayerAttack_Block;
     private readonly InputAction m_PlayerAttack_SpecialAttack;
+    private readonly InputAction m_PlayerAttack_Transform;
     public struct PlayerAttackActions
     {
         private @PlayerControls m_Wrapper;
@@ -356,6 +378,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_PlayerAttack_Attack;
         public InputAction @Block => m_Wrapper.m_PlayerAttack_Block;
         public InputAction @SpecialAttack => m_Wrapper.m_PlayerAttack_SpecialAttack;
+        public InputAction @Transform => m_Wrapper.m_PlayerAttack_Transform;
         public InputActionMap Get() { return m_Wrapper.m_PlayerAttack; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -374,6 +397,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SpecialAttack.started += instance.OnSpecialAttack;
             @SpecialAttack.performed += instance.OnSpecialAttack;
             @SpecialAttack.canceled += instance.OnSpecialAttack;
+            @Transform.started += instance.OnTransform;
+            @Transform.performed += instance.OnTransform;
+            @Transform.canceled += instance.OnTransform;
         }
 
         private void UnregisterCallbacks(IPlayerAttackActions instance)
@@ -387,6 +413,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SpecialAttack.started -= instance.OnSpecialAttack;
             @SpecialAttack.performed -= instance.OnSpecialAttack;
             @SpecialAttack.canceled -= instance.OnSpecialAttack;
+            @Transform.started -= instance.OnTransform;
+            @Transform.performed -= instance.OnTransform;
+            @Transform.canceled -= instance.OnTransform;
         }
 
         public void RemoveCallbacks(IPlayerAttackActions instance)
@@ -416,5 +445,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
         void OnSpecialAttack(InputAction.CallbackContext context);
+        void OnTransform(InputAction.CallbackContext context);
     }
 }

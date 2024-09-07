@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerCombatManager : MonoBehaviour
 {
@@ -31,10 +33,22 @@ public class PlayerCombatManager : MonoBehaviour
     [Header("Stun Status")]
     private Coroutine stunned;
 
-
     [Header("Attack Animation Thresholds")]
-    [SerializeField] Dictionary<string, Tuple<float, float>> normalizedTimeThresholds;  // Tuple<normalizedTime, timeToStopMovement>
+    [SerializeField] Dictionary<string, float> normalizedTimeThresholds;  // Tuple<normalizedTime, timeToStopMovement>
 
+    [Header("Demon Mode")]
+    public bool inPoweredState = false;
+    public bool transformTriggered = false;
+
+    [Header("Gravitate")]
+    public float gravitateDistance = 3f;
+    public float minDistanceFromPlayer = 2f;
+    public LayerMask whatIsEnemy;
+    public float gravitateSpeed = 0.25f;
+    public float distanceToStop = 2f;
+    public float maxDuration = 1f;
+    public float elapsedTime;
+    public bool isGravitating = false;
     public enum CombatState
     {
         Air,
@@ -52,7 +66,7 @@ public class PlayerCombatManager : MonoBehaviour
         Block,
         SpecialAttack,
     }
-    
+
 
     private void Awake()
     {
@@ -65,23 +79,31 @@ public class PlayerCombatManager : MonoBehaviour
 
 
         // manually create attack timings
-        normalizedTimeThresholds = new Dictionary<string, Tuple<float, float>>
+        normalizedTimeThresholds = new Dictionary<string, float>
         {
-            { "Attack1", Tuple.Create(0.7f, 0.5f) },
-            { "Attack2", Tuple.Create(0.72f, 0.3f) },
-            { "Attack3", Tuple.Create(1f, 1f) },
-            { "AirAttack1", Tuple.Create(0.8f, 0.2f) },
-            {"SpecialAttack1", Tuple.Create(0.95f, 1.5f)},
+            { "Attack1", 0.7f},
+            { "Attack2", 0.72f},
+            { "Attack3", 0.85f},
+            { "AirAttack1", 0.8f},
+            {"SpecialAttack1", 0.95f},
 
-            { "PoweredAttack1", Tuple.Create(0.7f, 0.5f) },
-            { "PoweredAttack2", Tuple.Create(0.72f, 0.3f) },
-            { "PoweredAttack3", Tuple.Create(1f, 1f) },
-            { "PoweredAirAttack1", Tuple.Create(0.8f, 0.2f) },
-            {"PoweredSpecialAttack1", Tuple.Create(0.95f, 1.5f)}
+            { "PoweredAttack1", 0.6f},
+            { "PoweredAttack2", 0.72f},
+            { "PoweredAttack3", 0.85f},
+            { "PoweredAirAttack1", 0.8f},
+            {"PoweredSpecialAttack1", 0.8f}
         };
     }
     private void Update()
     {
+        // powered state transformation
+        if (PlayerInputManager.instance.isTransforming && player.isGrounded && !transformTriggered)
+        {
+            Debug.Log("transform called");
+            StartCoroutine(triggerPlayerTransformationState());
+            transformTriggered = true;
+        }
+
         // change states based on position in environment
         if (player.isGrounded && !player.playerLocomotionManager.isDashing && !player.playerLocomotionManager.isRolling)
         {
@@ -114,11 +136,12 @@ public class PlayerCombatManager : MonoBehaviour
         switch (attackState)
         {
             case AttackState.Idle:
-                
+
                 // state transitions
                 currentlyAttacking = false;
                 executedAttack = false;
                 shouldCombo = false;
+                isGravitating = false;
 
                 if (PlayerInputManager.instance.isBlocking)
                 {
@@ -138,19 +161,42 @@ public class PlayerCombatManager : MonoBehaviour
                 break;
 
             case AttackState.Attack1:
-                PlayGroundAttackAnimation("Attack1", AttackState.Attack2);
+                if (inPoweredState)
+                {
+                    if (!isGravitating)
+                    {
+                        isGravitating = true;
+                        gravitateTowardsEnemy();
+                    }
+                    PlayGroundAttackAnimation("PoweredAttack1", AttackState.Attack2);
+                }
+
+                else
+                    PlayGroundAttackAnimation("Attack1", AttackState.Attack2);
+
                 break;
 
             case AttackState.Attack2:
-                PlayGroundAttackAnimation("Attack2", AttackState.Idle);
+                if (inPoweredState)
+                    PlayGroundAttackAnimation("PoweredAttack2", AttackState.Idle);
+                else
+                    PlayGroundAttackAnimation("Attack2", AttackState.Idle);
+
                 break;
 
             case AttackState.Attack3:
-                PlayGroundAttackAnimation("Attack3", AttackState.Idle);
+                if (inPoweredState)
+                    PlayGroundAttackAnimation("PoweredAttack3", AttackState.Idle);
+                else
+                    PlayGroundAttackAnimation("Attack3", AttackState.Idle);
                 break;
 
             case AttackState.SpecialAttack:
-                PlayGroundAttackAnimation("SpecialAttack1", AttackState.Idle);
+                if (inPoweredState)
+                    PlayGroundAttackAnimation("PoweredSpecialAttack1", AttackState.Idle);
+                else
+                    PlayGroundAttackAnimation("SpecialAttack1", AttackState.Idle);
+
                 break;
 
             case AttackState.Parry:
@@ -165,7 +211,7 @@ public class PlayerCombatManager : MonoBehaviour
                 ExecuteBlockState();
                 break;
 
-            
+
         }
     }
 
@@ -187,19 +233,8 @@ public class PlayerCombatManager : MonoBehaviour
                 break;
 
             case AttackState.Attack1:
-                if (!executedAttack)
-                {
-                    player.playerAnimator.CrossFade("AirAttack1", 0f);
-                    executedAttack = true;
-                    player.playerLocomotionManager.StopAllMovement(normalizedTimeThresholds["AirAttack1"].Item2);
-                    currentlyAttacking = true;
-                }
-
-                if (player.playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= normalizedTimeThresholds["AirAttack1"].Item1)
-                {
-                    executedAttack = false;
-                    attackState = AttackState.Idle;
-                }
+                if (!inPoweredState)
+                    PlayAirAttackAnimation("AirAttack1");
                 break;
         }
     }
@@ -210,10 +245,6 @@ public class PlayerCombatManager : MonoBehaviour
         {
             player.playerAnimator.CrossFade(attackName, 0f);
             executedAttack = true;
-            /*if (stopPlayerMovement)
-            {
-                player.playerLocomotionManager.StopAllMovement(normalizedTimeThresholds[attackName].Item2);
-            }*/
             currentlyAttacking = true;
         }
 
@@ -222,18 +253,18 @@ public class PlayerCombatManager : MonoBehaviour
             shouldCombo = true;
         }
 
-        if (player.playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= normalizedTimeThresholds[attackName].Item1 && PlayerInputManager.instance.isBlocking)
+        if (PlayerInputManager.instance.isBlocking)
         {
             executedAttack = false;
             attackState = AttackState.Parry;
         }
-        else if (shouldCombo && player.playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= normalizedTimeThresholds[attackName].Item1)
+        else if (shouldCombo && player.playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= normalizedTimeThresholds[attackName])
         {
             executedAttack = false;
             attackState = nextState;
 
         }
-        else if (player.playerAnimator.GetFloat("AttackWindowOpen") == 0f && player.playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= normalizedTimeThresholds[attackName].Item1)
+        else if ( player.playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= normalizedTimeThresholds[attackName])
         {
             executedAttack = false;
             attackState = AttackState.Idle;
@@ -241,18 +272,34 @@ public class PlayerCombatManager : MonoBehaviour
         }
     }
 
+    private void PlayAirAttackAnimation(string attackName)
+    {
+        if (!executedAttack)
+        {
+            player.playerAnimator.CrossFade(attackName, 0f);
+            executedAttack = true;
+            currentlyAttacking = true;
+        }
+
+        if (player.playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= normalizedTimeThresholds[attackName])
+        {
+            executedAttack = false;
+            attackState = AttackState.Idle;
+        }
+    }
+
     private void ExecuteParryState()
     {
         if (!PlayerInputManager.instance.isBlocking)
         {
-            player.playerLocomotionManager.StopAllMovement(-1);
+            //player.playerLocomotionManager.StopAllMovement(-1);
             player.playerAnimator.SetBool("isBlocking", false);
             parryWindowSet = false;
             attackState = AttackState.Idle;
         }
         else if (!parryWindowSet)
         {
-            player.playerLocomotionManager.StopAllMovement(Mathf.Infinity);
+            //player.playerLocomotionManager.StopAllMovement(Mathf.Infinity);
             player.playerAnimator.SetBool("isBlocking", true);
             parryWindow = parryOpeningTime;
             parryWindowSet = true;
@@ -260,7 +307,7 @@ public class PlayerCombatManager : MonoBehaviour
 
         if (parrySuccessful)
         {
-            player.playerLocomotionManager.StopAllMovement(-1);
+            //player.playerLocomotionManager.StopAllMovement(-1);
             parrySuccessful = false;
             parryWindowSet = false;
             attackState = AttackState.ParryFollowUp;
@@ -279,13 +326,11 @@ public class PlayerCombatManager : MonoBehaviour
     {
         if (!PlayerInputManager.instance.isBlocking)
         {
-            //player.playerLocomotionManager.StopAllMovement(-1);
             player.playerAnimator.SetBool("isBlocking", false);
             attackState = AttackState.Idle;
         }
         else
         {
-            //player.playerLocomotionManager.StopAllMovement(Mathf.Infinity);
             player.playerAnimator.SetBool("isBlocking", true);
         }
     }
@@ -300,17 +345,15 @@ public class PlayerCombatManager : MonoBehaviour
 
         if (!PlayerInputManager.instance.isBlocking)
         {
-            //player.playerLocomotionManager.StopAllMovement(-1);
             player.playerAnimator.SetBool("isBlocking", false);
         }
         else
         {
-            player.playerLocomotionManager.StopAllMovement(Mathf.Infinity);
+            //player.playerLocomotionManager.StopAllMovement(Mathf.Infinity);
         }
 
         if (PlayerInputManager.instance.isAttacking)
         {
-            //player.playerLocomotionManager.StopAllMovement(-1);
             player.playerAnimator.SetBool("isBlocking", false);
             parryFollowUpWindowSet = false;
 
@@ -327,30 +370,73 @@ public class PlayerCombatManager : MonoBehaviour
         parryFollowUpTime -= Time.deltaTime;
     }
 
-    /*public void stunPlayer(float time)
+    public IEnumerator triggerPlayerTransformationState()
     {
-        // reset attack flag
-        executedAttack = false;
-
-        if (stunned != null)
+        if (!inPoweredState)
         {
-            StopCoroutine(stunned);
+            inPoweredState = true;
+            player.playerAnimator.SetTrigger("isTransforming");
+            player.playerAnimator.SetBool("inPoweredState", true);
+        }
+        else
+        {
+            inPoweredState = false;
+            player.playerAnimator.SetBool("inPoweredState", false);
         }
 
-        stunned = StartCoroutine(stun(time));
-    }
-    public IEnumerator stun(float time)
-    {
-        attackState = AttackState.Stunned;
-        PlayerInputManager.instance.PauseInputs(time);
-        player.playerLocomotionManager.StopAllMovement(time);
+        yield return new WaitForSeconds(1f) ;
 
-        yield return new WaitForSeconds(time);
-
+        transformTriggered = false;
         attackState = AttackState.Idle;
-        stunned = null;
-    }*/
+    }
 
-    
+    public void gravitateTowardsEnemy()
+    {
+
+        RaycastHit2D hit = (Physics2D.Raycast(transform.position, player.retrievePlayerFacingDirection(), gravitateDistance, whatIsEnemy));
+
+        if (hit.collider != null && Mathf.Abs(transform.position.x - hit.collider.transform.position.x) >= minDistanceFromPlayer)
+        {
+            StartCoroutine(forcePlayerToEnemy(hit.collider));
+        }
+        else
+            Debug.Log("enemy null");
+        
+
+        
+    }
+
+    public IEnumerator forcePlayerToEnemy(Collider2D hit)
+    {
+        Vector2 enemyPosition = hit.transform.position;
+        elapsedTime = 0f;
+
+        while (Mathf.Abs(transform.position.x - enemyPosition.x) > distanceToStop && elapsedTime < maxDuration)
+            {
+            //transform.position = new Vector2(Mathf.Lerp(transform.position.x, enemyPosition.x, gravitateSpeed * Time.deltaTime), transform.position.y);
+            transform.position = new Vector2(Mathf.MoveTowards(transform.position.x, enemyPosition.x, gravitateSpeed * Time.deltaTime), transform.position.y);
+
+            elapsedTime += Time.deltaTime;
+ 
+             yield return null;
+        }
+        isGravitating = false;
+
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+
+        Vector2 direction = player.retrievePlayerFacingDirection();
+        Vector2 endPosition = (Vector2)transform.position + direction * gravitateDistance;
+
+        Gizmos.DrawLine(transform.position, endPosition);
+    }
+
 
 }
+
+
+
+        

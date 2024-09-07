@@ -23,9 +23,15 @@ public class AIManager : MonoBehaviour
     public List<Collider2D> collidersDamaged;
     public Collider2D enemyCollider;
 
+    public SpriteRenderer spriteRenderer;
+    public Color originalColor;
+    public Coroutine flashingRed;
+
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        originalColor = spriteRenderer.color;
     }
     void Start()
     {
@@ -81,16 +87,34 @@ public class AIManager : MonoBehaviour
         Collider2D[] collidersToDamage = new Collider2D[10];
         ContactFilter2D filter = new ContactFilter2D();
         filter.layerMask = whatIsPlayer;
+        filter.useLayerMask = true;
         int colliderCount = Physics2D.OverlapCollider(enemyCollider, filter, collidersToDamage);
         for (int i = 0; i < colliderCount; i++)
         {
 
             if (!collidersDamaged.Contains(collidersToDamage[i]))
             {
-                Debug.Log("Hit Player");
+                Debug.Log(collidersToDamage[i].gameObject.name);
                 collidersToDamage[i].gameObject.GetComponent<PlayerManager>().TakeDamage(this);
                 collidersDamaged.Add(collidersToDamage[i]);
             }
         }
+    }
+
+    public void TakeDamage(PlayerManager player)
+    {
+        if (flashingRed != null)
+        {
+            StopCoroutine(flashingRed);
+            flashingRed = null;
+        }
+        flashingRed = StartCoroutine(flashRed());
+    }
+
+    public IEnumerator flashRed()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        spriteRenderer.color = originalColor;
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class ChildToParent : MonoBehaviour
 {
     public PlayerManager player;
+    public GameObject blueLight;
 
     public void StopPlayerVelocity()
     {
@@ -15,4 +16,15 @@ public class ChildToParent : MonoBehaviour
     {
         CameraShake.instance.ShakeCamera(intensity, 0.1f);
     }
+
+    public void ToggleLight(float i)
+    {
+        if (i > 0) 
+            blueLight.SetActive(true);
+        
+        else 
+            blueLight.SetActive(false);
+    }
+
+    
 }

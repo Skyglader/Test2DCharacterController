@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class PlayerParticleStorage : MonoBehaviour
 {
+    public PlayerManager player;
     [SerializeField] public List<ParticleSystem> ParticleSystems = new List<ParticleSystem>();
     [SerializeField] public List<Transform> transforms = new List<Transform>();
+
+    private void Awake()
+    {
+        player = GetComponentInParent<PlayerManager>();
+    }
     public void DashStart()
     {
         PlayTargetParticle(0);
@@ -24,11 +30,17 @@ public class PlayerParticleStorage : MonoBehaviour
 
     public void PlayParryParticle()
     {
-        ParticleSystems[2].Play();
+        if (!player.playerCombatManager.inPoweredState)
+            ParticleSystems[2].Play();
+        else
+            ParticleSystems[4].Play();
     }
 
     public void PlayBlockParticle()
     {
-        ParticleSystems[3].Play();
+        if (!player.playerCombatManager.inPoweredState)
+            ParticleSystems[3].Play();
+        else
+            ParticleSystems[5].Play();
     }
 }

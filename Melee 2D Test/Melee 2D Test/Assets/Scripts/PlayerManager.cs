@@ -6,6 +6,7 @@ using UnityEngine.Animations;
 
 public class PlayerManager : MonoBehaviour
 {
+    [Header("Component References")]
     public Rigidbody2D rb;
     public GameObject playerModel; // assign in inspector
     public Animator playerAnimator;
@@ -13,25 +14,36 @@ public class PlayerManager : MonoBehaviour
     public PlayerAnimationManager playerAnimationManager;
     public PlayerCombatManager playerCombatManager;
     public PlayerParticleStorage playerParticleStorage;
+    public Collider2D swordCollider; // assign in inspector
 
     [Header("Ground Check")]
     public bool isGrounded;
     public Vector2 groundCheckOffset;
     public float groundCheckRadius;
     public LayerMask whatIsGround;
+    public float gravityScale;
 
     [Header("Invulnerable")]
     public bool isInvulnerable = false;
     public Coroutine invulnerableState;
 
+    [Header("Layers")]
+    public LayerMask whatIsEnemy;
+
+    [Header("Attacking")]
+    public List<Collider2D> collidersDamaged;
+    public bool canHitStop = false;
+    public float hitStopDuration = 0.04f;
+
     [Header("Stop Movement and Input Flags")]
     public bool movementAndInputStopped = false;
     public List<string> validInputStopAnimations = new();
     public List<string> validMovementStopAnimations = new();
-    AnimatorClipInfo[] clipInfo;
-
+    public AnimatorClipInfo[] clipInfo;
     public bool inputStopped = false;
     public bool movementStopped = false;
+
+    
 
     private void Awake()
     {
@@ -44,26 +56,13 @@ public class PlayerManager : MonoBehaviour
     }
     void Start()
     {
-
+        gravityScale = rb.gravityScale;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerAnimator.GetFloat("invulnerabilityActive") > 0f)
-        {
-            isInvulnerable = true;
-        }
-        else
-        {
-            isInvulnerable = false;
-        }
-
         clipInfo = playerAnimator.GetCurrentAnimatorClipInfo(0);
-
-        preventInputDuringAnimation();
-        preventMovementDuringAnimation();
-
 
     }
 
@@ -71,12 +70,36 @@ public class PlayerManager : MonoBehaviour
     {
         CheckGrounded();
     }
+
     private void CheckGrounded()
     {
         Collider2D[] groundColliders = Physics2D.OverlapCircleAll((Vector2)transform.position + groundCheckOffset, groundCheckRadius, whatIsGround);
 
         isGrounded = groundColliders.Length > 0;
-          
+
+    }
+
+    public void Attack()
+    {
+        Collider2D[] collidersToDamage = new Collider2D[10];
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.useTriggers = true;
+        filter.layerMask = whatIsEnemy;
+        filter.useLayerMask = true;
+        int colliderCount = Physics2D.OverlapCollider(swordCollider, filter, collidersToDamage);
+        for (int i = 0; i < colliderCount; i++)
+        {
+            
+            if (!collidersDamaged.Contains(collidersToDamage[i]))
+            {
+                Debug.Log(collidersToDamage[i].gameObject.name);
+                collidersToDamage[i].gameObject.GetComponent<AIManager>().TakeDamage(this);
+                collidersDamaged.Add(collidersToDamage[i]);
+
+                if (canHitStop)
+                    HitStop.instance.Stop(hitStopDuration);
+            }
+        }
     }
 
     public void TakeDamage(AIManager enemy)
@@ -104,7 +127,7 @@ public class PlayerManager : MonoBehaviour
 
             CameraShake.instance.ShakeCamera(1.5f, 0.3f);
         }
-        else if (playerCombatManager.attackState == PlayerCombatManager.AttackState.Block)
+        else if (playerCombatManager.attackState == PlayerCombatManager.AttackState.Block || playerCombatManager.attackState == PlayerCombatManager.AttackState.ParryFollowUp)
         {
             Debug.Log("Attack Blocked");
             playerParticleStorage.PlayBlockParticle();
@@ -122,7 +145,10 @@ public class PlayerManager : MonoBehaviour
         }
         else
         {
-            playerAnimator.Play("PlayerHit", 0);
+            if (playerCombatManager.inPoweredState)
+                playerAnimator.Play("PoweredPlayerHit", 0);
+            else
+                playerAnimator.Play("PlayerHit", 0);
             playerAnimationManager.HandleTakeHitAnimation();
             Debug.Log(isInvulnerable);
         }
@@ -130,119 +156,17 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-   /* public void CheckForStopMovementAndInput()
+   public Vector2 retrievePlayerFacingDirection()
     {
-        // Get the current animation clip info
-        AnimatorClipInfo[] clipInfo = playerAnimator.GetCurrentAnimatorClipInfo(0);
-
-        if (clipInfo.Length > 0)
+        if (playerModel.transform.localRotation == Quaternion.Euler(0f, 0f, 0f))
         {
-            string currentClipName = clipInfo[0].clip.name; 
-
-            if (validAnimatorNames.Contains(currentClipName))
-            {
-                if (playerAnimator.GetFloat("stopMovementAndInputActive") > 0f)
-                {
-                    PlayerInputManager.instance.PauseInputs(Mathf.Infinity);
-                    playerLocomotionManager.StopAllMovement(Mathf.Infinity);
-                    movementAndInputStopped = true;
-                }
-                else
-                {
-                    PlayerInputManager.instance.PauseInputs(-1);
-                    playerLocomotionManager.StopAllMovement(-1);
-                    movementAndInputStopped = false;
-                }
-            }
-            else
-            {
-                if (movementAndInputStopped) 
-                {
-                    PlayerInputManager.instance.PauseInputs(-1);
-                    playerLocomotionManager.StopAllMovement(-1);
-                    movementAndInputStopped = false;
-                }
-            }
+            return new Vector2(1, 0);
         }
-    }*/
-
-    public void preventInputDuringAnimation()
-    {
-        
-
-        if (clipInfo.Length > 0)
+        else
         {
-            string currentClipName = clipInfo[0].clip.name;
-            if (validInputStopAnimations.Contains(currentClipName))
-            {
-                if (playerAnimator.GetFloat("stopInput") > 0f)
-                {
-                    PlayerInputManager.instance.PauseInputs(Mathf.Infinity);
-                    inputStopped = true;
-                }
-                else
-                {
-                    PlayerInputManager.instance.PauseInputs(-1);
-                    inputStopped = false;
-                }
-            }
-            else
-            {
-                if (inputStopped)
-                {
-                    PlayerInputManager.instance.PauseInputs(-1);
-                    inputStopped = false;
-                }
-            }
+            return new Vector2(-1, 0);
         }
     }
-
-    public void preventMovementDuringAnimation()
-    {
-
-        if (clipInfo.Length > 0)
-        {
-            string currentClipName = clipInfo[0].clip.name;
-            if (validMovementStopAnimations.Contains(currentClipName))
-            {
-                if (playerAnimator.GetFloat("stopMovement") > 0f)
-                {
-                    playerLocomotionManager.StopAllMovement(Mathf.Infinity);
-                    movementStopped = true;
-                }
-                else
-                {
-                    playerLocomotionManager.StopAllMovement(-1);
-                    movementStopped = false;
-                }
-            }
-            else
-            {
-                if (movementStopped)
-                {
-                    playerLocomotionManager.StopAllMovement(-1);
-                    movementStopped = false;
-                }
-            }
-        }
-    }
-
-    /*public void SetInvulnerability(float time)
-    {
-        if (invulnerableState != null)
-        {
-            StopCoroutine(invulnerableState);
-            isInvulnerable = false;
-        }
-
-        invulnerableState = StartCoroutine(ResetInvulnerability(time));
-    }
-
-    public IEnumerator ResetInvulnerability(float time)
-    {
-        yield return new WaitForSeconds(time);
-        isInvulnerable = true;
-    }*/
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

@@ -12,6 +12,7 @@ public class PlayerAnimationManager : MonoBehaviour
     public float rollClipLength;
     public float takeHitClipLength;
     public float specialAttackClipLength;
+    public float poweredDashClipLength;
     public float takeHitSpeed = 1.5f;
 
     public bool isHit = false;
@@ -29,9 +30,108 @@ public class PlayerAnimationManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        HandleHitStopOnAnimation();
+        HandleActivateHitColliderOnAnimation();
+        HandleInvincibilityOnAnimation();
+        preventInputDuringAnimation();
+        preventMovementDuringAnimation();
         HandleMovementAnimations();
         isHit = player.playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("PlayerHit");
 
+    }
+
+    private void HandleHitStopOnAnimation()
+    {
+        if (player.playerAnimator.GetFloat("hitStopActive") > 0f)
+        {
+            player.canHitStop = true;
+        }
+        else
+        {
+            player.canHitStop = false;
+        }
+    }
+    private void HandleActivateHitColliderOnAnimation()
+    {
+        if (player.playerAnimator.GetFloat("weaponColliderActive") > 0f)
+        {
+            player.Attack();
+        }
+        else
+        {
+            player.collidersDamaged.Clear();
+        }
+    }
+    private void HandleInvincibilityOnAnimation()
+    {
+        if (player.playerAnimator.GetFloat("invulnerabilityActive") > 0f)
+        {
+            player.isInvulnerable = true;
+        }
+        else
+        {
+            player.isInvulnerable = false;
+        }
+    }
+    public void preventInputDuringAnimation()
+    {
+
+
+        if (player.clipInfo.Length > 0)
+        {
+            string currentClipName = player.clipInfo[0].clip.name;
+            if (player.validInputStopAnimations.Contains(currentClipName))
+            {
+                if (player.playerAnimator.GetFloat("stopInput") > 0f)
+                {
+                    PlayerInputManager.instance.PauseInputs(Mathf.Infinity);
+                    player.inputStopped = true;
+                }
+                else
+                {
+                    PlayerInputManager.instance.PauseInputs(-1);
+                    player.inputStopped = false;
+                }
+            }
+            else
+            {
+                if (player.inputStopped)
+                {
+                    PlayerInputManager.instance.PauseInputs(-1);
+                    player.inputStopped = false;
+                }
+            }
+        }
+    }
+
+    public void preventMovementDuringAnimation()
+    {
+
+        if (player.clipInfo.Length > 0)
+        {
+            string currentClipName = player.clipInfo[0].clip.name;
+            if (player.validMovementStopAnimations.Contains(currentClipName))
+            {
+                if (player.playerAnimator.GetFloat("stopMovement") > 0f)
+                {
+                    player.playerLocomotionManager.StopAllMovement(Mathf.Infinity);
+                    player.movementStopped = true;
+                }
+                else
+                {
+                    player.playerLocomotionManager.StopAllMovement(-1);
+                    player.movementStopped = false;
+                }
+            }
+            else
+            {
+                if (player.movementStopped)
+                {
+                    player.playerLocomotionManager.StopAllMovement(-1);
+                    player.movementStopped = false;
+                }
+            }
+        }
     }
 
     private void HandleMovementAnimations()
@@ -91,6 +191,11 @@ public class PlayerAnimationManager : MonoBehaviour
             if (clip.name == "SpecialAttack1")
             {
                 specialAttackClipLength = clip.length;
+            }
+
+            if (clip.name == "PoweredPlayerDash")
+            {
+                
             }
         }
     }

@@ -16,6 +16,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool isRolling = false;
     public bool isBlocking = false;
     public bool isSpecialAttacking = false;
+    public bool isTransforming = false;
 
     [Header("Button Checks")]
     public bool jumpPressed = false;
@@ -57,6 +58,7 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerAttack.Block.canceled += i => isBlocking = false;
             playerControls.PlayerAttack.SpecialAttack.performed += i => isSpecialAttacking = true;
             playerControls.PlayerAttack.SpecialAttack.canceled += i => isSpecialAttacking = false;
+            playerControls.PlayerAttack.Transform.started += OnTransformStarted;
             //playerControls.PlayerAttack.Attack.canceled += OnAttackCanceled;
         }
 
@@ -70,6 +72,7 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.PlayerMovement.Dash.started -= OnDashStarted;
         playerControls.PlayerMovement.Dash.canceled -= OnDashCanceled;
         playerControls.PlayerAttack.Attack.started -= OnAttackStarted;
+        playerControls.PlayerAttack.Transform.started -= OnTransformStarted;
         //playerControls.PlayerAttack.Attack.canceled -= OnAttackCanceled;
     }
 
@@ -81,6 +84,7 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.PlayerMovement.Dash.started -= OnDashStarted;
         playerControls.PlayerMovement.Roll.started -= OnRollStarted;
         playerControls.PlayerAttack.Attack.started -= OnAttackStarted;
+        playerControls.PlayerAttack.Transform.started -= OnTransformStarted;
 
         movementInput = Vector2.zero;
         if (takeHitCoroutine != null)
@@ -106,6 +110,7 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.PlayerMovement.Dash.started += OnDashStarted;
         playerControls.PlayerMovement.Roll.started += OnRollStarted;
         playerControls.PlayerAttack.Attack.started += OnAttackStarted;
+        playerControls.PlayerAttack.Transform.started += OnTransformStarted;
 
         if (playerControls.PlayerMovement.Movement.ReadValue<Vector2>() != Vector2.zero)
         {
@@ -167,10 +172,11 @@ public class PlayerInputManager : MonoBehaviour
         StartCoroutine(ResetAttackTime(attackDelayTime));
     }
 
-    /*private void OnAttackCanceled(InputAction.CallbackContext context)
+    private void OnTransformStarted(InputAction.CallbackContext context)
     {
-        attackPressed = false;
-    }*/
+        isTransforming = true;
+        StartCoroutine(ResetTransformTime());
+    }
 
     public Vector2 GetMovementDirection()
     {
@@ -204,5 +210,11 @@ public class PlayerInputManager : MonoBehaviour
     {
         yield return null;
         isAttacking = false;
+    }
+
+    public IEnumerator ResetTransformTime()
+    {
+        yield return null;
+        isTransforming = false;
     }
 }
